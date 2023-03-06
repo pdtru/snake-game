@@ -22,6 +22,7 @@ let dx = 10;
 let dy = 0;
 
 main();
+createFood();
 
 
 function main() {
@@ -29,6 +30,7 @@ function main() {
         clearCanvas();
         advanceSnake();
         drawSnake();
+        drawFood();
         main();
     }, 100)
 }
@@ -59,7 +61,7 @@ function changeDirection(event) {
     if (keyPressed === LEFT_KEY && !goingRight) { dx = -10; dy = 0; }
     if (keyPressed === UP_KEY && !goingDown) { dx = 0; dy = -10; }
     if (keyPressed === RIGHT_KEY && !goingLeft) { dx = 10; dy = 0; }
-    if (keyPressed === DOWN_KEY && !goingDown) { dx = 0; dy = 10; }
+    if (keyPressed === DOWN_KEY && !goingUp) { dx = 0; dy = 10; }
 }
 
 function drawSnake() {
@@ -70,4 +72,26 @@ function advanceSnake() {
     const head = { x: snake[0].x + dx, y: snake[0].y + dy };
     snake.unshift(head);
     snake.pop();
+}
+
+function randomTen(min, max) {
+    return Math.round((Math.random() * (max - min) + min) / 10) * 10;
+}
+
+function createFood() {
+    foodX = randomTen(0, gameCanvas.width - 10);
+    foodY = randomTen(0, gameCanvas.height - 10);
+    snake.forEach(function isFoodOnSnake(part) {
+        const foodIsOnSnake = part.x == foodX && part.y == foodY
+        if (foodIsOnSnake) {
+            createFood();
+        }
+    });
+}
+
+function drawFood() {
+    ctx.fillStyle = 'red';
+    ctx.strokestyle = 'darkred';
+    ctx.fillRect(foodX, foodY, 10, 10);
+    ctx.strokeRect(foodX, foodY, 10, 10);
 }
