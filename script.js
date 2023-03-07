@@ -18,6 +18,7 @@ let snake = [
     { x: 110, y: 150 },
 ];
 
+let score = 0;
 let dx = 10;
 let dy = 0;
 
@@ -28,9 +29,9 @@ createFood();
 function main() {
     setTimeout(function onTick() {
         clearCanvas();
+        drawFood();
         advanceSnake();
         drawSnake();
-        drawFood();
         main();
     }, 100)
 }
@@ -71,7 +72,15 @@ function drawSnake() {
 function advanceSnake() {
     const head = { x: snake[0].x + dx, y: snake[0].y + dy };
     snake.unshift(head);
-    snake.pop();
+    const didEatFood = snake[0].x === foodX && snake[0].y === foodY;
+    if (didEatFood) {
+        score += 10; 
+        document.getElementById('score').innerHTML = score;
+        createFood();
+    } else {
+        snake.pop();
+    }
+
 }
 
 function randomTen(min, max) {
