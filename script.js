@@ -1,6 +1,10 @@
 const canvasBackgroundColour = "white";
 const gameCanvas = document.getElementById("gameCanvas");
 const ctx = gameCanvas.getContext("2d");
+const restartButton = document.getElementById("restartButton");
+restartButton.addEventListener("click", () => {
+    window.location.reload();
+});
 document.addEventListener("keydown", changeDirection);
 
 //  Select the colour to fill the drawing
@@ -24,7 +28,6 @@ let dy = 0;
 
 main();
 createFood();
-
 
 function main() {
     setTimeout(function onTick() {
@@ -123,11 +126,5 @@ function didGameEnd() {
         const hitToptWall = snake[0].y < 0;
         const hitBottomWall = snake[0].y > gameCanvas.height - 10;
         return hitLeftWall || hitRightWall || hitToptWall || hitBottomWall;
-    }
-}
-
-function restartGame() {
-    if (didGameEnd()) {
-
     }
 }
