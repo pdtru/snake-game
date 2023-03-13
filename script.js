@@ -29,7 +29,10 @@ createFood();
 function main() {
     setTimeout(function onTick() {
         changingDirection = false;
-        if (didGameEnd()) return;
+        if (didGameEnd()) {
+            document.createElement('button');
+            return;
+        }
         clearCanvas();
         drawFood();
         advanceSnake();
@@ -120,5 +123,11 @@ function didGameEnd() {
         const hitToptWall = snake[0].y < 0;
         const hitBottomWall = snake[0].y > gameCanvas.height - 10;
         return hitLeftWall || hitRightWall || hitToptWall || hitBottomWall;
+    }
+}
+
+function restartGame() {
+    if (didGameEnd()) {
+
     }
 }
